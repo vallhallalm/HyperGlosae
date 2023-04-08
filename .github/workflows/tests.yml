@@ -59,8 +59,8 @@ jobs:
           greenframe analyze
           cd greenIT
           docker run -it --init --rm --cap-add=SYS_ADMIN \
-            -v /<path>/input:/app/input \
-            -v /<path>/output:/app/output  \
+            -v ./input:/app/input \
+            -v ./output:/app/output  \
             -e TZ=<timezone> \
             --name green-it-test \
             green-it \
