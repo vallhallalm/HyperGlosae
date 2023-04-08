@@ -61,7 +61,6 @@ jobs:
           docker run -it --init --rm --cap-add=SYS_ADMIN \
             -v ./input:/app/input \
             -v ./output:/app/output  \
-            -e TZ=<timezone> \
             --name green-it-test \
             green-it \
             greenit analyse /app/input/url.yaml /app/output/global.html --format=html
