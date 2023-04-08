@@ -57,5 +57,8 @@ jobs:
         run: |
           cd tests
           greenframe analyze
+          cd greenIT
+          greenit analyse /input/url.yaml /output/global.html --format=html
+
         env: 
           GREENFRAME_SECRET_TOKEN: ${{ secrets.GREENFRAME_SECRET_TOKEN }}
