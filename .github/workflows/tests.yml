@@ -21,6 +21,9 @@ jobs:
           docker compose pull
           docker pull benel/cucumber-capybara
           curl https://assets.greenframe.io/install.sh | bash
+          git clone https://github.com/cnumr/GreenIT-Analysis-cli.git
+          cd GreenIT-Analysis-cli
+          docker build -t green-it .
       - name: Install and launch backend with test data
         run: |
           cd backend
