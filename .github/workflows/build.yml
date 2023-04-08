@@ -19,7 +19,7 @@ jobs:
         run: |
           git clone https://github.com/cnumr/GreenIT-Analysis-cli.git
           cd GreenIT-Analysis-cli
-          docker build -t greenIT .
+          docker build -t green-it .
       - name: Install frontend dependencies
         run: |
           cd frontend
