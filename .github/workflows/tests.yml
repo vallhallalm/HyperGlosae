@@ -58,7 +58,7 @@ jobs:
           cd tests
           greenframe analyze
           cd greenIT
-          docker run -it --init --rm --cap-add=SYS_ADMIN \
+          docker run -tty --init --rm --cap-add=SYS_ADMIN \
             -v ./input:/app/input \
             -v ./output:/app/output  \
             --name green-it-test \
