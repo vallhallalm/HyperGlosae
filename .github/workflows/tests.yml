@@ -58,7 +58,12 @@ jobs:
           cd tests
           greenframe analyze
           cd greenIT
-          greenit analyse /input/url.yaml /output/global.html --format=html
-
+          docker run -it --init --rm --cap-add=SYS_ADMIN \
+            -v /<path>/input:/app/input \
+            -v /<path>/output:/app/output  \
+            -e TZ=<timezone> \
+            --name greenITTest \
+            greenIT \
+            greenit analyse /app/input/url.yaml /app/output/global.html --format=html
         env: 
           GREENFRAME_SECRET_TOKEN: ${{ secrets.GREENFRAME_SECRET_TOKEN }}
