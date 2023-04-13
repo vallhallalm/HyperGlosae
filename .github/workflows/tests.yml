@@ -62,11 +62,7 @@ jobs:
       - name: Run eco-design test
         run: |
           cd tests
-          try {
-            bash greenframeThreshold.sh
-          } catch (error) {
-            exit error
-          }
+          bash greenframeThreshold.sh
           cd greenIT
           docker run -t --init --rm --cap-add=SYS_ADMIN -v /input:/app/input -v /output:/app/output  --name green-it-test green-it greenit analyse /app/input/url.yaml /app/output/global.html --format=html
         env: 
