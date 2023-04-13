@@ -1,12 +1,12 @@
 #!/bin/bash
 outputGreenframe=$(greenframe analyze)
-echo $outputGreenframe
+#echo $outputGreenframe
 
-threshold=0.05
+threshold=0.02
 
 interString=${outputGreenframe% Wh*}
 finalConsumption=${interString##* (}
-echo $finalConsumption
+#echo $finalConsumption
 
 if (( $(echo "$finalConsumption > $threshold" |bc -l) ))
 then 
