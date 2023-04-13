@@ -2,6 +2,3 @@
 - name : 'HyperGlosae'
   url : 'http://localhost:3000/'
   waitForNavigation: domcontentloaded
-  actions:
-    - name : "Scroll auto vers le bas de la page"
-      type : 'scroll'
