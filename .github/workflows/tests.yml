@@ -63,6 +63,6 @@ jobs:
           cd tests
           greenframe analyze
           cd greenIT
-          docker run -t --init --rm --cap-add=SYS_ADMIN -v /input:/app/input -v /output:/app/output  --name green-it-test green-it greenit analyse /app/input/url.yml /app/output/global.html --format=html
+          docker run -t --init --rm --cap-add=SYS_ADMIN -v /input:/app/input -v /output:/app/output  --name green-it-test green-it greenit analyse /app/input/url.yaml /app/output/global.html --format=html
         env: 
           GREENFRAME_SECRET_TOKEN: ${{ secrets.GREENFRAME_SECRET_TOKEN }}
