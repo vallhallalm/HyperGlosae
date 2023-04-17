@@ -22,6 +22,7 @@ jobs:
           curl https://assets.greenframe.io/install.sh | bash
           cd /home/runner/work/
           mkdir output
+          chown -R docker /home/runner/work/output
       - name: Install and launch backend with test data
         run: |
           cd backend
@@ -68,6 +69,7 @@ jobs:
           bash greenframeThreshold.sh
           cd greenIT
           sudo docker run -t --init --rm --cap-add=SYS_ADMIN --network="host" -v /home/runner/work/HyperGlosae/HyperGlosae/tests/greenIT/input:/app/input -v /home/runner/work/output:/app/output  --name green-it-test vallhallalm/green_it_cli:v1 greenit analyse /app/input/url.yaml /app/output/global.html --format=html
+          w
         env: 
           GREENFRAME_SECRET_TOKEN: ${{ secrets.GREENFRAME_SECRET_TOKEN }}
       - name: save output from greenIT as Artifacts
