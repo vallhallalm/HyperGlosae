@@ -20,6 +20,9 @@ jobs:
           docker compose pull
           docker pull benel/cucumber-capybara
           curl https://assets.greenframe.io/install.sh | bash
+          cd /home/runner/work/
+          mkdir output 
+          sudo chmod=rwx .
       - name: Install and launch backend with test data
         run: |
           cd backend
