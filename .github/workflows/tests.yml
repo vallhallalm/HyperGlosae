@@ -66,8 +66,7 @@ jobs:
           bash greenframeThreshold.sh
           cd /home/runner/work/
           mkdir output
-          cut -d: -f1 /etc/passwd
-          sudo chown -R bin /home/runner/work/output
+          chmod -R a+rwX /home/runner/work/output/
           cd /home/runner/work/HyperGlosae/HyperGlosae/tests/greenIT/
           sudo docker run -t --init --rm --cap-add=SYS_ADMIN --network="host" -v /home/runner/work/HyperGlosae/HyperGlosae/tests/greenIT/input:/app/input -v /home/runner/work/output:/app/output  --name green-it-test vallhallalm/green_it_cli:v1 greenit analyse /app/input/url.yaml /app/output/global.html --format=html
           w
