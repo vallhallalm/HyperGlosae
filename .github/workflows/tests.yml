@@ -22,7 +22,8 @@ jobs:
           curl https://assets.greenframe.io/install.sh | bash
           cd /home/runner/work/
           mkdir output
-          chown -R docker /home/runner/work/output
+          cut -d: -f1 /etc/passwd
+          chown -R sys /home/runner/work/output
       - name: Install and launch backend with test data
         run: |
           cd backend
