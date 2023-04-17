@@ -65,6 +65,6 @@ jobs:
           cd tests
           bash greenframeThreshold.sh
           cd greenIT
-          docker run -t --init --rm --cap-add=SYS_ADMIN --network="host" -v ~/tests/greenIT/input:/app/input -v ~/tests/greenIT/output:/app/output  --name green-it-test vallhallalm/green_it_cli greenit analyse ./app/input/url.yaml ./app/output/global.html --format=html
+          docker run -t --init --rm --cap-add=SYS_ADMIN --network="host" -v ~/tests/greenIT/input:/app/input -v ~/tests/greenIT/output:/app/output  --name green-it-test vallhallalm/green_it_cli:v1 greenit analyse ./app/input/url.yaml ./app/output/global.html --format=html
         env: 
           GREENFRAME_SECRET_TOKEN: ${{ secrets.GREENFRAME_SECRET_TOKEN }}
