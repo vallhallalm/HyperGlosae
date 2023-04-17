@@ -22,9 +22,6 @@ jobs:
           docker compose pull
           docker pull benel/cucumber-capybara
           curl https://assets.greenframe.io/install.sh | bash
-          git clone https://github.com/cnumr/GreenIT-Analysis-cli.git
-          cd GreenIT-Analysis-cli
-          docker build -t green-it .
       - name: Install and launch backend with test data
         run: |
           cd backend
@@ -64,6 +61,6 @@ jobs:
           cd tests
           bash greenframeThreshold.sh
           cd greenIT
-          docker run -t --init --rm --cap-add=SYS_ADMIN -v /input:/app/input -v /output:/app/output  --name green-it-test green-it greenit analyse /app/input/url.yaml /app/output/global.html --format=html
+          docker run -t --init --rm --cap-add=SYS_ADMIN -v input:/app/input -v output:/app/output  --name green-it-test gchapel/greenit-analysis-cli greenit analyse /app/input/url.yaml /app/output/global.html --format=html
         env: 
           GREENFRAME_SECRET_TOKEN: ${{ secrets.GREENFRAME_SECRET_TOKEN }}
