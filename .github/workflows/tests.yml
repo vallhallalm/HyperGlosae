@@ -75,5 +75,5 @@ jobs:
       - name: save output from greenIT as Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: greenIT report
-          path: home/runner/work/output
+          name: green-it-report
+          path: /home/runner/work/output
