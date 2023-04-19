@@ -80,4 +80,5 @@ jobs:
           retention-days: 5
   
   exposeTest:
+    needs: test
     uses: ./.github/workflows/exposeTests.yml
