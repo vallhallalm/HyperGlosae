@@ -15,5 +15,5 @@ jobs:
               uses: pavi2410/html-preview-action@v2
               with:
                 html_file: 'global.html'
-            runs : echo $steps.html_preview.outputs.url
+            - run : echo $steps.html_preview.outputs.url
     
