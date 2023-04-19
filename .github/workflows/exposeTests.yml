@@ -12,29 +12,8 @@ jobs:
                 name: green-it-report
                 path: /home/runner/work/output
             - name: Serve Files
-              uses: Eun/http-server-action@v1
+              uses: pavi2410/html-preview-action@v2
               with:
-                directory: /home/runner/work/output
-                port: 8080
-                no-cache: false
-                index-files: |
-                    ["gloabl.html"]
-                allowed-methods: |
-                    ["GET", "HEAD"]
-                content-types: |
-                    {
-                        "appcache": "text/cache-manifest",
-                        "css": "text/css",
-                        "gif": "image/gif",
-                        "html": "text/html",
-                        "ico": "image/x-icon",
-                        "jpeg": "image/jpeg",
-                        "jpg": "image/jpeg",
-                        "js": "text/javascript",
-                        "json": "application/json",
-                        "png": "image/png",
-                        "txt": "text/plain",
-                        "xml": "text/xml"
-                    }
-            - run: curl -vvvv http://localhost:8080/index.html
+                html_file: 'global.html'
+            runs : echo $steps.html_preview.outputs.url
     
