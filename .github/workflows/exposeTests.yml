@@ -19,6 +19,6 @@ jobs:
               uses: github-actions-up-and-running/pr-comment@v1.0.0 
               env:
                 repo-token: ${{ secrets.GITHUB_TOKEN }}
-                myInput: ${{ format('[Click here to preview HTML page in browser]({0})', steps.html_preview.outputs.url) }}
+                myInput: ${{'[Click here to preview HTML page in browser]($steps.html_preview.outputs.url)'}}
         
     
