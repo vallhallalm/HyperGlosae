@@ -1,6 +1,6 @@
-name: exposeTests
+name: Expose tests
 on: 
-    workflow_dispatch
+  workflow_dispatch
 
 jobs:
     ExposeTest:
