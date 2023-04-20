@@ -6,11 +6,11 @@ on:
 jobs:
 
   build:
-    if: "${{'WORKFLOW : Add green IT Analysis HTML file output' != github.event.head_commit.message}}"
+    if: "${{'PROCESS : Commit Green IT Analysis HTML file output to be previewed' != github.event.head_commit.message}}"
     uses: ./.github/workflows/build.yml
 
   test:
-    if: "${{'WORKFLOW : Add green IT Analysis HTML file output' != github.event.head_commit.message}}"
+    if: "${{'PROCESS : Commit Green IT Analysis HTML file output to be previewed' != github.event.head_commit.message}}"
     runs-on: ubuntu-latest
     steps:
       - name: Download sources
@@ -71,7 +71,6 @@ jobs:
           chmod -R a+rwX /home/runner/work/output/
           cd /home/runner/work/HyperGlosae/HyperGlosae/tests/greenIT/
           sudo docker run -t --init --rm --cap-add=SYS_ADMIN --network="host" -v /home/runner/work/HyperGlosae/HyperGlosae/tests/greenIT/input:/app/input -v /home/runner/work/output:/app/output  --name green-it-test vallhallalm/green_it_cli:v1 greenit analyse /app/input/url.yaml /app/output/global.html --format=html
-          ls /home/runner/work/output/
         env: 
           GREENFRAME_SECRET_TOKEN: ${{ secrets.GREENFRAME_SECRET_TOKEN }}
       - name: save output from greenIT as Artifacts
@@ -82,6 +81,6 @@ jobs:
           retention-days: 5
 
   exposeTest:
-    if: "${{'WORKFLOW : Add green IT Analysis HTML file output' != github.event.head_commit.message}}"
+    if: "${{'PROCESS : Commit Green IT Analysis HTML file output to be previewed' != github.event.head_commit.message}}"
     needs: test
     uses: ./.github/workflows/exposeTests.yml

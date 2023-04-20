@@ -18,17 +18,18 @@ jobs:
                 name: green-it-report
                 path: /home/runner/work/output
             - name: Copy artifact into repo
-              run: cp -r /home/runner/work/output /home/runner/work/HyperGlosae/HyperGlosae/tests/greenIT/output
-            - name: Commit artifact on current branch
+              run: git checkout --orphan htmlPreview |
+                cp -r /home/runner/work/output/ /home/runner/work/HyperGlosae/HyperGlosae/
+            - name: Commit artifact on htmlPreview branch
               uses: EndBug/add-and-commit@v9
               with:
                 add: "*"
                 default_author: github_actions
-                message: "WORKFLOW : Add green IT Analysis HTML file output"
-            - name: Set CURRENT_BRANCH
-              run: echo "CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
-            - name: Create link to go to html file exposition
+                message: "PROCESS : Commit Green IT Analysis HTML file output to be previewed"
+                push: origin htmlPreview
+                remove: "."
+            - name: Create link to go to html file preview
               run:
-                echo "https://htmlpreview.github.io/?https://github.com/vallhallalm/HyperGlosae/${{env.CURRENT_BRANCH}}/tests/greenIT/output/global.html"
+                echo "https://htmlpreview.github.io/?https://github.com/vallhallalm/HyperGlosae/htmlPreview/global.html"
         
     
