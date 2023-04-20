@@ -14,7 +14,7 @@ jobs:
             - name: Serve Files
               uses: pavi2410/html-preview-action@v2
               with:
-                html_file: 'global.html'
+                html_file: '/home/runner/work/output/global.html'
             - name: create link to go to html file exposition
               uses: github-actions-up-and-running/pr-comment@v1.0.0 
               env:
