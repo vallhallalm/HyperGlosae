@@ -78,7 +78,3 @@ jobs:
           name: green-it-report
           path: /home/runner/work/output
           retention-days: 5
-  
-  exposeTest:
-    needs: test
-    uses: ./.github/workflows/exposeTests.yml
