@@ -1,0 +1,189 @@
+<!DOCTYPE html><html lang="en"><head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+    <style type="text/css"> 
+        .grade {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            border-radius: 50%;
+            background-color: #f00;
+            font-size: 14px;
+            font-weight: 650;
+            line-height: 24px;
+        }
+
+        .grade.big-grade {
+            width: 42px;
+            height: 42px;
+            font-size: 28px;
+            line-height: 42px;
+        }
+
+        .grade.A {
+            background-color: #349A47;
+            color: #fff;
+        }
+    
+        .grade.B {
+            background-color: #51B84B;
+            color: #fff;
+        }
+    
+        .grade.C {
+            background-color: #CADB2A;
+            color: #fff;
+        }
+    
+        .grade.D {
+            background-color: #F6EB15;
+        }
+    
+        .grade.E {
+            background-color: #FECD06;
+        }
+    
+        .grade.F {
+            background-color: #F99839;
+            color: #fff;
+        }
+    
+        .grade.G {
+            background-color: #ED2124;
+            color: #fff;
+        }
+        </style>
+
+    <title>GreenIT-Analysis report</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-success bg-success text-white mb-4">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1" style="font-size: 1rem;">GreenIT-Analysis report</span>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="container">
+            <table id="tabInformations" class="table table-bordered text-center my-3">
+                <thead class="table-light">
+                    <tr><th scope="col">Date d'exécution</th>
+                    <th scope="col">Hostname</th>
+                    <th scope="col">Plateforme</th>
+                    <th scope="col">Type de connexion</th>
+                </tr></thead>
+                <tbody>
+                    <tr>
+                        <td id="date">20/04/2023 09:53:16</td>
+                        <td id="hostname">localhost:3000</td>
+                        <td id="device">desktop</td>
+                        <td id="connection">Filaire</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="container my-5">
+            <div class="row text-center">
+                <div class="col col-md-3">
+                    <div class="card mb-3 border-success" style="max-width: 18rem;">
+                        <div class="card-header bg-success text-white">Ecoindex</div>
+                        <div class="card-body text-dark">
+                            <h1 id="ecoIndex" class="card-title" style="height: 45px;">81 <span class="grade big-grade A">A</span></h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col col-md-3">
+                    <div class="card mb-3 border-warning" style="max-width: 18rem;">
+                        <div class="card-header bg-warning text-white">Règles à corriger</div>
+                        <div class="card-body text-dark">
+                            <h1 id="nbBestPracticesToCorrect" class="card-title">1</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col col-md-3">
+                    <div class="card mb-3 border-primary" style="max-width: 18rem;">
+                        <div class="card-header bg-primary text-white">Pages</div>
+                        <div class="card-body text-dark">
+                            <h1 id="nbPages" class="card-title">1</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col col-md-3">
+                    <div class="card mb-3 border-danger" style="max-width: 18rem;">
+                        <div class="card-header bg-danger text-white">Erreur(s)</div>
+                        <div class="card-body text-dark">
+                            <h1 id="nbErrors" class="card-title">0</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container my-3">
+            <div class="row">
+                <div class="col col-md-9">
+                    <table id="tabPages" class="table table-sm">
+                        <thead class="table-light">
+                            <tr><th scope="col">Page</th>
+                            <th scope="col">Ecoindex</th>
+                            <th scope="col">Eau (cl)</th>
+                            <th scope="col">GES (gCO2e)</th>
+                            <th scope="col">Règles à corriger</th>
+                        </tr></thead>
+                        
+                    <tbody>
+                            <tr>
+                                <td><a href="HyperGlosae.html">HyperGlosae</a></td>
+                                
+                                <td>81 <span class="grade A">A</span></td>
+                                <td>2.07</td>
+                                <td>1.38</td>
+                                <td>1</td>
+                            </tr>
+                        </tbody></table>
+                </div>
+                <div class="col col-md-3">
+                    <table id="tabWorstRules" class="table table-bordered">
+                        <thead>
+                            <tr class="bg-dark text-white">
+                              <th scope="col">Top 5 des règles à corriger</th>
+                            </tr>
+                        </thead>
+                        
+                    <tbody>
+                            <tr>
+                                <td>#1 Ajouter des expires ou cache-control headers (&gt;= 95%)</td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>#2 Compresser les ressources (&gt;= 95%) </td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>#3 Limiter le nombre de domaines (&lt; 3)</td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>#4 Ne pas retailler les images dans le navigateur</td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>#5 Eviter les tags SRC vides</td>
+                            </tr>
+                        </tbody></table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body></html>
