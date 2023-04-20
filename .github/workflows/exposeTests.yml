@@ -23,10 +23,9 @@ jobs:
               uses: EndBug/add-and-commit@v9
               with:
                 add: "*"
-                cwd: "/home/runner/work/HyperGlosae/HyperGlosae"
                 default_author: github_actions
                 message: "WORKFLOW : Add green IT Analysis HTML file output"
-                push: origin 
+                push: origin/PE_test_greenframe
             - name: Set CURRENT_BRANCH
               run: echo "CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
             - name: create link to go to html file exposition
