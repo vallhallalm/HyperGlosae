@@ -30,6 +30,6 @@ jobs:
                 push: origin htmlPreview
             - name: Create link to go to html file preview
               run:
-                echo "https://htmlpreview.github.io/?https://github.com/vallhallalm/HyperGlosae/htmlPreview/global.html"
+                echo "https://htmlpreview.github.io/?https://github.com/vallhallalm/HyperGlosae/htmlPreview/output/global.html"
         
     
