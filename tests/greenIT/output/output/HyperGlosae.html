@@ -1,0 +1,342 @@
+<!DOCTYPE html><html lang="en"><head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+    <style type="text/css"> 
+        .grade {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            border-radius: 50%;
+            background-color: #f00;
+            font-size: 14px;
+            font-weight: 650;
+            line-height: 24px;
+        }
+
+        .grade.big-grade {
+            width: 42px;
+            height: 42px;
+            font-size: 28px;
+            line-height: 42px;
+        }
+
+        .grade.A {
+            background-color: #349A47;
+            color: #fff;
+        }
+    
+        .grade.B {
+            background-color: #51B84B;
+            color: #fff;
+        }
+    
+        .grade.C {
+            background-color: #CADB2A;
+            color: #fff;
+        }
+    
+        .grade.D {
+            background-color: #F6EB15;
+        }
+    
+        .grade.E {
+            background-color: #FECD06;
+        }
+    
+        .grade.F {
+            background-color: #F99839;
+            color: #fff;
+        }
+    
+        .grade.G {
+            background-color: #ED2124;
+            color: #fff;
+        }
+
+        .checkmark-success {
+            display: inline-block;
+            transform: rotate(45deg);
+            height: 18px;
+            width: 10px;
+            border-bottom: 5px solid #78b13f;
+            border-right: 5px solid #78b13f;
+        }
+
+        .close-warning,
+        .close-error {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            padding-left: 20px;
+        }
+        .close-warning:before, 
+        .close-warning:after,
+        .close-error:before, 
+        .close-error:after {
+            position: absolute;
+            content: ' ';
+            height: 22px;
+            width: 4px;
+        }
+        .close-warning:before,
+        .close-error:before {
+            transform: rotate(45deg);
+        }
+        .close-warning:after,
+        .close-error:after {
+            transform: rotate(-45deg);
+        }
+
+        .close-warning:before,
+        .close-warning:after {
+            background-color: orange;
+        }
+
+        .close-error:before,
+        .close-error:after {
+            background-color: red;
+        }
+
+        </style>
+
+    <title>GreenIT-Analysis report</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-success bg-success text-white mb-4">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1" style="font-size: 1rem;">GreenIT-Analysis report &gt; <a class="text-white" href="http://localhost:3000/">HyperGlosae</a></span>
+            <div class="d-flex flex-row-reverse">
+                <div id="date">20/04/2023 11:05:11</div>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="container my-5">
+            <div class="row text-center">
+                <div class="col col-md-4">
+                    <div class="card mb-4 border-success" style="max-width: 18rem;">
+                        <div class="card-header bg-success text-white">Ecoindex</div>
+                        <div class="card-body text-dark">
+                            <h1 id="ecoIndex" class="card-title" style="height: 45px;">81 <span class="grade big-grade A">A</span></h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col col-md-4">
+                    <div class="card mb-4 border-success" style="max-width: 18rem;">
+                        <div class="card-header bg-success text-white">Eau (cl)</div>
+                        <div class="card-body text-dark">
+                            <h1 id="waterConsumption" class="card-title">2.07</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col col-md-4">
+                    <div class="card mb-4 border-success" style="max-width: 18rem;">
+                        <div class="card-header bg-success text-white">GES (gCO2e)</div>
+                        <div class="card-body text-dark">
+                            <h1 id="greenhouseGasesEmission" class="card-title">1.38</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col col-md-4">
+                    <div class="card mb-4 border-success" style="max-width: 18rem;">
+                        <div class="card-header bg-success text-white">Requêtes</div>
+                        <div class="card-body text-dark">
+                            <h1 id="nbRequest" class="card-title">4</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col col-md-4">
+                    <div class="card mb-4 border-success" style="max-width: 18rem;">
+                        <div class="card-header bg-success text-white">Taille de la page (Ko)</div>
+                        <div class="card-body text-dark">
+                            <h1 id="pageSize" class="card-title">146 (544)</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col col-md-4">
+                    <div class="card mb-4 border-success" style="max-width: 18rem;">
+                        <div class="card-header bg-success text-white">Taille du DOM</div>
+                        <div class="card-body text-dark">
+                            <h1 id="domSize" class="card-title">243</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container my-3">
+            <h5 class="mb-3">Bonnes pratiques</h5>
+            <div class="row">
+                <div class="col col-md-12">
+                    <table id="tabBestPractices" class="table table-sm">
+                        <thead class="table-light">
+                            <tr><th scope="col">Règle</th>
+                            <th scope="col">Résultat</th>
+                            <th scope="col">Note</th>
+                        </tr></thead>
+                        
+                    <tbody>
+                            <tr>
+                                <td>Ajouter des expires ou cache-control headers (&gt;= 95%)</td>
+                                <td>0% ressources cachées</td>
+                                <td class="text-center"><div class="close-error"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Compresser les ressources (&gt;= 95%) </td>
+                                <td>97.2% ressources compressées</td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Limiter le nombre de domaines (&lt; 3)</td>
+                                <td>1 domaine(s) trouvé(s)</td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Ne pas retailler les images dans le navigateur</td>
+                                <td>0 image(s) retaillée(s) dans le navigateur</td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Eviter les tags SRC vides</td>
+                                <td></td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Externaliser les css</td>
+                                <td></td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Externaliser les js</td>
+                                <td></td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Eviter les requêtes en erreur</td>
+                                <td>0 erreur(s) HTTP</td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Limiter le nombre de requêtes HTTP (&lt; 27)</td>
+                                <td>4 requête(s) HTTP </td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Ne pas télécharger des images inutilement</td>
+                                <td>0 image(s) téléchargée(s) mais non affichée(s) dans la page </td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Valider le javascript</td>
+                                <td></td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Taille maximum des cookies par domaine(&lt; 512 Octets)</td>
+                                <td></td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Minifier les css (&gt;= 95%)</td>
+                                <td></td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Minifier les js (&gt;= 95%)</td>
+                                <td></td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Pas de cookie pour les ressources statiques</td>
+                                <td></td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Eviter les redirections</td>
+                                <td>0 redirection(s)</td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Optimiser les images bitmap</td>
+                                <td></td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Optimiser les images svg</td>
+                                <td></td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Ne pas utiliser de plugins</td>
+                                <td></td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Fournir une print css</td>
+                                <td></td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>N'utilisez pas les boutons standards des réseaux sociaux</td>
+                                <td></td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Limiter le nombre de fichiers css (&lt;3) </td>
+                                <td></td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Utiliser des ETags (&gt;= 95%)</td>
+                                <td>100% ressources utilisant des ETags</td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody><tbody>
+                            <tr>
+                                <td>Utiliser des polices de caractères standards</td>
+                                <td></td>
+                                <td class="text-center"><div class="checkmark-success"></div></td>
+                            </tr>
+                        </tbody></table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body></html>
