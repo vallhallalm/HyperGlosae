@@ -11,14 +11,14 @@ jobs:
               uses: actions/checkout@v3
               with:
                 repository: ${{ github.event.pull_request.head.repo.full_name }}
-                ref: ${{ github.event.pull_request.head.ref }}
+                ref: htmlPreview
             - name: Get green it report zip
               uses: actions/download-artifact@v3
               with:
                 name: green-it-report
                 path: /home/runner/work/output
             - name: Copy artifact into repo
-              run: git checkout --orphan htmlPreview |
+              run: rm -rf /home/runner/work/HyperGlosae/HyperGlosae/
                 cp -r /home/runner/work/output/ /home/runner/work/HyperGlosae/HyperGlosae/
             - name: Commit artifact on htmlPreview branch
               uses: EndBug/add-and-commit@v9
