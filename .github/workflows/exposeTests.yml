@@ -13,12 +13,10 @@ jobs:
                 path: /home/runner/work/output
             - name: Serve Files
               uses: pavi2410/html-preview-action@v2
-              with:
+              env:
                 html_file: '/home/runner/work/output/global.html'
             - name: create link to go to html file exposition
-              uses: github-actions-up-and-running/pr-comment@v1.0.0 
-              env:
-                repo-token: ${{ secrets.GITHUB_TOKEN }}
-                myInput: ${{'[Click here to preview HTML page in browser]($steps.html_preview.outputs.url)'}}
+              run:
+                echo "{steps.html_preview.outputs.url}"
         
     
