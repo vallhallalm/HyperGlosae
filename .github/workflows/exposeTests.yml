@@ -18,9 +18,7 @@ jobs:
                 name: green-it-report
                 path: /home/runner/work/output
             - name: Copy artifact into repo
-              run: ls /home/runner/work/HyperGlosae/HyperGlosae/ |
-                cp -r /home/runner/work/output/ /home/runner/work/HyperGlosae/HyperGlosae/ |
-                ls /home/runner/work/HyperGlosae/HyperGlosae/ 
+              run: cp -r /home/runner/work/output/ /home/runner/work/HyperGlosae/HyperGlosae/ 
             - name: Commit artifact on htmlPreview branch
               uses: EndBug/add-and-commit@v9
               with:
