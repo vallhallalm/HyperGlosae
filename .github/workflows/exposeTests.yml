@@ -17,9 +17,9 @@ jobs:
               with:
                 name: green-it-report
                 path: /home/runner/work/output
-            - name: copy artifact into repo
+            - name: Copy artifact into repo
               run: cp -r /home/runner/work/output /home/runner/work/HyperGlosae/HyperGlosae/tests/greenIT/output
-            - name: commit artifact
+            - name: Commit artifact on current branch
               uses: EndBug/add-and-commit@v9
               with:
                 add: "*"
@@ -27,7 +27,7 @@ jobs:
                 message: "WORKFLOW : Add green IT Analysis HTML file output"
             - name: Set CURRENT_BRANCH
               run: echo "CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
-            - name: create link to go to html file exposition
+            - name: Create link to go to html file exposition
               run:
                 echo "https://htmlpreview.github.io/?https://github.com/vallhallalm/HyperGlosae/${{env.CURRENT_BRANCH}}/tests/greenIT/output/global.html"
         
