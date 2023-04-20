@@ -12,11 +12,12 @@ jobs:
                 name: green-it-report
                 path: /home/runner/work/output
             - name: Serve Files
+              id: html_preview
               uses: pavi2410/html-preview-action@v2
-              env:
+              with:
                 html_file: '/home/runner/work/output/global.html'
             - name: create link to go to html file exposition
               run:
-                echo "{steps.html_preview.outputs.url}"
+                echo ${{steps.html_preview.outputs.url}}
         
     
