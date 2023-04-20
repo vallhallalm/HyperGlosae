@@ -11,6 +11,7 @@ jobs:
               with:
                 name: green-it-report
                 path: /home/runner/work/output
+            - run: ls /home/runner/work/output
             - name: Serve Files
               id: html_preview
               uses: pavi2410/html-preview-action@v2
