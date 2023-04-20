@@ -27,7 +27,7 @@ jobs:
                 default_author: github_actions
                 message: "PROCESS : Commit Green IT Analysis HTML file output to be previewed"
                 push: origin htmlPreview
-                remove: "."
+                remove: . -r
             - name: Create link to go to html file preview
               run:
                 echo "https://htmlpreview.github.io/?https://github.com/vallhallalm/HyperGlosae/htmlPreview/global.html"
