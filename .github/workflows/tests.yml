@@ -6,11 +6,11 @@ on:
 jobs:
 
   build:
-    if: github.event.head_commit.message != 'WORKFLOW : Add green IT Analysis HTML file output'
+    if: "${{'WORKFLOW : Add green IT Analysis HTML file output' != github.event.head_commit.message}}"
     uses: ./.github/workflows/build.yml
 
   test:
-    if: github.event.head_commit.message != 'WORKFLOW : Add green IT Analysis HTML file output'
+    if: "${{github.event.head_commit.message == 'WORKFLOW : Add green IT Analysis HTML file output'}}"
     runs-on: ubuntu-latest
     steps:
       - name: Download sources
@@ -82,6 +82,6 @@ jobs:
           retention-days: 5
 
   exposeTest:
-    if: github.event.head_commit.message != 'WORKFLOW : Add green IT Analysis HTML file output'
+    if: "${{github.event.head_commit.message != 'WORKFLOW : Add green IT Analysis HTML file output'}}"
     needs: test
     uses: ./.github/workflows/exposeTests.yml
