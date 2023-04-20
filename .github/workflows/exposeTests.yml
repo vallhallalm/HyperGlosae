@@ -3,6 +3,9 @@ on:
   workflow_dispatch
 
 jobs:
+    runTest:
+      uses: ./.github/workflows/tests.yml
+      
     ExposeTest:
         runs-on: ubuntu-latest
         steps:
