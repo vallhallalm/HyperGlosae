@@ -2,14 +2,15 @@ name: Acceptance tests
 on:
   - push
   - pull_request
-  - workflow_call
 
 jobs:
 
   build:
+    if: github.event.head_commit.message != 'WORKFLOW : Add green IT Analysis HTML file output'
     uses: ./.github/workflows/build.yml
 
   test:
+    if: github.event.head_commit.message != 'WORKFLOW : Add green IT Analysis HTML file output'
     runs-on: ubuntu-latest
     steps:
       - name: Download sources
@@ -79,3 +80,8 @@ jobs:
           name: green-it-report
           path: /home/runner/work/output
           retention-days: 5
+
+  exposeTest:
+    if: github.event.head_commit.message != 'WORKFLOW : Add green IT Analysis HTML file output'
+    needs: test
+    uses: ./.github/workflows/exposeTests.yml

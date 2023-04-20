@@ -1,22 +1,14 @@
 name: Expose tests
 on: 
-  workflow_dispatch
+  workflow_call
 
 jobs:
-    runTest:
-      uses: ./.github/workflows/tests.yml
       
     ExposeTest:
         runs-on: ubuntu-latest
         steps:
             - name: Download sources
               uses: actions/checkout@v3
-            - name: Wait for frontend build
-              uses: lewagon/wait-on-check-action@v1.3.1
-              with:
-                check-name: runTest/tests
-                ref: ${{ github.sha }}
-                repo-token: ${{ secrets.GITHUB_TOKEN }}
             - name: Get green it report zip
               uses: actions/download-artifact@v3
               with:
