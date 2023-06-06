@@ -3,7 +3,7 @@ import './Page.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { BookmarkFill } from 'react-bootstrap-icons';
 import Metadata from './Metadata';
@@ -11,9 +11,10 @@ import DocumentsCards from './DocumentsCards';
 import BrowseTools from './BrowseTools';
 import EditableText from './EditableText';
 import FormattedText from './FormattedText';
-import hyperglosae from './hyperglosae';
+import Type, { TypeBadge } from './Type';
+import NavbarCollection from './navbarCollection';
 
-function Page() {
+function Page({backend}) {
 
   const [page, setPage] = useState([]);
   const [metadata, setMetadata] = useState([]);
@@ -21,23 +22,34 @@ function Page() {
   const [sourcesOfSourceMetadata, setSourcesOfSourceMetadata] = useState([]);
   const [scholiaMetadata, setScholiaMetadata] = useState([]);
   const [content, setContent] = useState([]);
+  const [trail, setTrail] = useState({});
   const [lastUpdate, setLastUpdate] = useState();
-  let {id } = useParams();
+  let {id, collectionId} = useParams();
+  const position = useMemo(() => {
+    if (trail.links && id) {
+      let element = trail.links.find((item) => {
+        return item.object === id;
+      });
+      return trail.links.indexOf(element);
+    }
+    return undefined;
+  }, [trail.links, id]);
   let margin = useLocation().hash.slice(1);
   let hasRubrics = (id, rows) => rows.some(x => x.key[1] !== 0 && x.value.isPartOf === id && x.value.text);
+  const getCaption = ({dc_title, dc_spatial}) => dc_title + (dc_spatial ? `, ${dc_spatial}` : '');
 
   if (sourceMetadata)
-    document.title = `${sourceMetadata.dc_title} ${sourceMetadata.dc_creator ? `(${sourceMetadata.dc_creator})` : ''}`;
+    document.title = `${getCaption(sourceMetadata)} ${sourceMetadata.dc_creator ? `(${sourceMetadata.dc_creator})` : ''}`;
 
   useEffect(() => {
-    hyperglosae.getView({view: 'metadata', id, options: ['include_docs']})
+    backend.getView({view: 'metadata', id, options: ['include_docs']})
       .then(
         (rows) => {
           let documents = rows.map(x => x.doc);
           setMetadata(documents);
         }
       );
-    hyperglosae.getView({view: 'content', id, options: ['include_docs']})
+    backend.getView({view: 'content', id, options: ['include_docs']})
       .then(
         (rows) => {
           setContent(rows);
@@ -51,29 +63,32 @@ function Page() {
   useEffect(() => {
     if (metadata.length) {
       let focusedDocument = metadata.find(x => (x._id === id));
-      setSourceMetadata(focusedDocument);
-      let forwardLinks = (focusedDocument.links || [])
-        .map(({subject, object}) => (subject && (subject !== id)) ? subject : object)
-        .map(x => x.split('#')[0]);
-      let forwardLinkedDocuments = metadata.filter(x => forwardLinks.includes(x._id));
-      setSourcesOfSourceMetadata(forwardLinkedDocuments);
-      let reverseLinkedDocuments = metadata.filter(
-        x => !forwardLinks.includes(x._id) && x._id !== id
-      );
-      setScholiaMetadata(reverseLinkedDocuments);
+      if (focusedDocument) {
+        setSourceMetadata(focusedDocument);
+        let forwardLinks = (focusedDocument.links || [])
+          .map(({subject, object}) => (subject && (subject !== id)) ? subject : object)
+          .map(x => x.split('#')[0]);
+        let forwardLinkedDocuments = metadata.filter(x => forwardLinks.includes(x._id));
+        setSourcesOfSourceMetadata(forwardLinkedDocuments);
+        let reverseLinkedDocuments = metadata.filter(
+          x => !forwardLinks.includes(x._id) && x._id !== id
+        );
+        setScholiaMetadata(reverseLinkedDocuments);
+      };
+      if (collectionId) {
+        setTrail(metadata.find((item) => item._id === collectionId));
+      }
     }
-  }, [id, metadata, lastUpdate]);
+  }, [id, metadata, lastUpdate, collectionId]);
 
   let getText = ({doc, value}) => {
     if (!doc) {
       return value.text;
     }
-    if (value.inclusion !== 'whole') {
-      let fragment = '#' + value.inclusion;
-      let imageReference = /!\[[^\]]*\]\([^)]+/;
-      return doc.text.replace(imageReference, '$&' + fragment);
-    }
-    return doc.text;
+    let fragment = (value.inclusion !== 'whole' ? '#' + value.inclusion : '')
+      + ` "${getCaption(doc)}"`;
+    let imageReference = /!\[[^\]]*\]\([^)]+/;
+    return doc.text.replace(imageReference, '$&' + fragment);
   };
 
   useEffect(() => {
@@ -113,20 +128,36 @@ function Page() {
         <Col className="page">
           <Row className ="runningHead">
             <RunningHeadSource metadata={ sourceMetadata } />
-            <RunningHeadMargin metadata={ metadata.find(x => (x._id === margin)) } />
+            <RunningHeadMargin {...{backend}}
+              metadata={ metadata.find(x => (x._id === margin)) }
+            />
           </Row>
           {page.map(({rubric, source, scholia}, i) =>
-            <Passage key={rubric || i} source={source} rubric={rubric} scholia={scholia} margin={margin} />)}
+            <Passage key={rubric || i}
+              {...{source, rubric, scholia, margin, backend}}
+            />)
+          }
         </Col>
         <References scholiaMetadata={scholiaMetadata} active={!margin}
-          createOn={[id]} {...{setLastUpdate}}
+          createOn={[id]} {...{setLastUpdate, backend}}
         />
       </Row>
+      <div className="navbar-collec">
+        {(trail.links && position) != undefined &&
+          <NavbarCollection
+            position={position + 1}
+            total={trail.links.length}
+            pastId={ (position) == 0 ? undefined : trail.links[position - 1].object }
+            nextId={ (position == trail.links.length - 1) ? undefined : trail.links[position + 1].object }
+            collectionId={trail._id}
+          />
+        }
+      </div>
     </Container>
   );
 }
 
-function Passage({source, rubric, scholia, margin}) {
+function Passage({source, rubric, scholia, margin, backend}) {
   let scholium = scholia.filter(x => (x.isPartOf === margin)) || {text: ''};
   return (
     <Row>
@@ -142,7 +173,7 @@ function Passage({source, rubric, scholia, margin}) {
           </Row>
         </Container>
       </Col>
-      <PassageMargin scholium={scholium} active={!!margin} rubric={rubric} />
+      <PassageMargin active={!!margin} {...{scholium, rubric, backend}} />
     </Row>
   );
 }
@@ -153,12 +184,12 @@ function Rubric({id}) {
   );
 }
 
-function PassageMargin({active, scholium, rubric}) {
+function PassageMargin({active, scholium, rubric, backend}) {
   if (!active) return;
   return (
     <Col xs={5} className="scholium">
       {scholium.map((x, i) =>
-        <EditableText key={i} text={x.text} id={x.id} rubric={rubric} />
+        <EditableText key={i} text={x.text} id={x.id} {...{rubric, backend}} />
       )}
     </Col>
   );
@@ -169,26 +200,28 @@ function RunningHeadSource({metadata}) {
     <Col className="main">
       <BookmarkFill className="icon" />
       <Metadata metadata={metadata} />
+      <TypeBadge type={metadata?.type} />
     </Col>
   );
 }
 
-function RunningHeadMargin({metadata}) {
+function RunningHeadMargin({metadata, backend}) {
   if (!metadata) return;
   return (
     <Col xs={5} className="scholium">
       <BrowseTools id={metadata._id} closable={true} />
-      <Metadata metadata={metadata} editable={true} />
+      <Metadata metadata={metadata} editable={true} {...{backend}} />
+      <Type metadata={metadata} editable={true} {...{backend}}/>
     </Col>
   );
 }
 
-function References({scholiaMetadata, active, createOn, setLastUpdate}) {
+function References({scholiaMetadata, active, createOn, setLastUpdate, backend}) {
   if (!active) return;
   return (
     <Col className="gloses" >
-      <DocumentsCards docs={scholiaMetadata} expandable={true} {...{createOn}}
-        byRow={1} {...{setLastUpdate}}
+      <DocumentsCards docs={scholiaMetadata} expandable={true} byRow={1}
+        {...{createOn, setLastUpdate, backend}}
       />
     </Col>
   );

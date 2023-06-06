@@ -13,6 +13,7 @@
 
 .page .runningHead div {
   padding-top: 17px;
+  padding-bottom: 17px;
 }
 
 .page .row:first-of-type .main {
@@ -72,7 +73,12 @@ dd {
   padding-left: 30px;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
+.navbar-collec {
+  display: none
+}
+
+@media screen and (max-width: 820px) {
+  .navbar-collec {
+    display: block
+  }
 }

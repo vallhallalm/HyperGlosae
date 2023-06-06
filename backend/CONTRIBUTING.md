@@ -30,6 +30,14 @@ Production settings will be provided in a different document.
   put localhost:5984/hyperglosae/_security --data '{"members":{"roles":[]},"admins":{"roles":["_admin"]}}'
   ```
 
+4. Create test users:
+
+  ```sh
+  put localhost:5984/_users
+  put localhost:5984/_users/org.couchdb.user:alice --data '{"name":"alice", "password":"whiterabbit", "roles":[], "type":"user"}'
+  put localhost:5984/_users/org.couchdb.user:bill --data '{"name":"bill", "password":"madhatter", "roles":[], "type":"user"}'
+  ```
+
 ## Contribute to test data
 
 Update documents in `../samples` and push them to the backend:

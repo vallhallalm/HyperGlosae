@@ -2,9 +2,8 @@ import './Metadata.css';
 
 import { useEffect, useState } from 'react';
 import yaml from 'yaml';
-import hyperglosae from './hyperglosae';
 
-function Metadata({metadata = {}, editable}) {
+function Metadata({metadata = {}, editable, backend}) {
   const [beingEdited, setBeingEdited] = useState(false);
   const [editedDocument, setEditedDocument] = useState(metadata);
 
@@ -14,7 +13,7 @@ function Metadata({metadata = {}, editable}) {
 
   let handleClick = () => {
     setBeingEdited(true);
-    hyperglosae.getDocument(metadata._id)
+    backend.getDocument(metadata._id)
       .then((x) => {
         setEditedDocument(x);
       });
@@ -29,7 +28,7 @@ function Metadata({metadata = {}, editable}) {
       ...yaml.parse(event.target.value)
     };
     setEditedDocument(updatedDocument);
-    hyperglosae.putDocument(updatedDocument);
+    backend.putDocument(updatedDocument);
   };
 
   let editedMetadata = Object.fromEntries(
@@ -40,21 +39,24 @@ function Metadata({metadata = {}, editable}) {
   let format = (actors, prefix = '', suffix = '') =>
     actors && (prefix + [actors].flat().join(' & ') + suffix);
 
+  let getCaption = ({dc_title, dc_spatial}) => dc_title + (dc_spatial ? `, ${dc_spatial}` : '');
+
   if (!beingEdited) {
-    let {dc_title, dc_creator, dc_translator, dc_isPartOf, dc_issued} = editedMetadata;
+    let {dc_title, dc_spatial, dc_creator, dc_translator, dc_isPartOf, dc_issued} = editedMetadata;
     let attributes = (editable)
-      ? {className: 'editable', onClick: handleClick, title: 'Edit metadata...'}
+      ? {className: 'editable metadata', onClick: handleClick, title: 'Edit metadata...'}
       : {};
     return (
       <span {...attributes}>
         <span className="work">
-          {dc_title} {format(dc_creator, '(', ')')},
+          {getCaption({dc_title, dc_spatial})} {format(dc_creator, '(', ')')},
         </span>
         <span className="edition">
           {format(dc_translator, 'Translated by ', ', ')}
           {dc_isPartOf ? <i>{dc_isPartOf}, </i> : ''}
           {dc_issued ? `${new Date(dc_issued).getFullYear()}` : ''}
         </span>
+        , <License metadata={metadata} />
       </span>
     );
   }
@@ -64,6 +66,23 @@ function Metadata({metadata = {}, editable}) {
         defaultValue={yaml.stringify(editedMetadata)} onBlur={handleBlur}
       />
     </form>
+  );
+}
+
+function License({metadata}) {
+  let license_uri = metadata.dc_license;
+  let [license_name] = /BY[\w-]+/i.exec(license_uri) || [];
+  if (license_name) return (
+    <span className="license">
+      <a href={license_uri}>
+        CC-{license_name.toUpperCase()}
+      </a>
+    </span>
+  );
+  return (
+    <span className="license">
+      All rights reserved
+    </span>
   );
 }
 
